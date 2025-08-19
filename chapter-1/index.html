@@ -50,7 +50,7 @@
   (function(){
     const DIR = "images/";
     const BASE = "CH1_";
-    const TOTAL = 11;
+    const TOTAL = 12;
     const EXT = ".jpg";
 
     const pagesEl = document.getElementById("pages");
@@ -59,7 +59,7 @@
       p.className = "page";
       p.dataset.page = i;
 
-      const num = String(i).padStart(2, "0");
+     const num = i === 1 ? "" : String(i - 1).padStart(2, "0");
       const img = document.createElement("img");
       img.alt = `Page ${i}`;
       img.loading = "lazy";
