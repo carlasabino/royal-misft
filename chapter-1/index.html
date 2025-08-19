@@ -59,7 +59,7 @@
       p.className = "page";
       p.dataset.page = i;
 
-      const num = String(i).padStart(2, "2");
+      const num = String(i).padStart(2, "0");
       const img = document.createElement("img");
       img.alt = `Page ${i}`;
       img.loading = "lazy";
