@@ -49,7 +49,7 @@
   <script>
   (function(){
     const DIR = "images/";
-    const BASE = "CH1_";
+    const BASE = "CH1";
     const TOTAL = 12;
     const EXT = ".jpg";
 
@@ -59,7 +59,7 @@
       p.className = "page";
       p.dataset.page = i;
 
-     const num = i === 1 ? "cover" : String(i - 1).padStart(2, "0");
+     const num = i === 1 ? ":" : String(i - 1).padStart(2, "0");
       const img = document.createElement("img");
       img.alt = `Page ${i}`;
       img.loading = "lazy";
