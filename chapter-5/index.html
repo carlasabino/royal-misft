@@ -136,24 +136,26 @@
       if (e.key.toLowerCase() === "f") document.getElementById("fit").click();
     });
 
-    <style>
-  .cta {
-    display:inline-block; padding:0.8rem 1.5rem; background:#1a1c22; color:#f2f2f2;
-    border-radius:8px; text-decoration:none; font-weight:bold; transition:background .3s ease;
-  }
-  .cta:hover { background:#2a2d36; }
-  .cta.disabled { opacity:.6; cursor:not-allowed; pointer-events:none; }
-</style>
-
-<div style="text-align:center; margin-top:3rem;">
-  <a href="../chapter-4/" style="color:#aaa; text-decoration:none; margin-right:1rem;">← Back to Chapter 4</a>
-
-  <!-- Disabled CTA – hindi magpo-proceed kahit i-click -->
-  <a class="cta disabled" aria-disabled="true" tabindex="-1">TO BE CONTINUED →</a>
-</div>
+    go.value = 1;
+    setZoom(1);
+  })();
+  </script>
+  <div style="text-align:center; margin-top: 3rem;">
+  <a href="../chapter-/" style="color: #aaa; text-decoration: none; margin-right: 1rem;">← Back to Chapter 4</a>
+  <a href="../TO BE CONTINUED/" style="
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #1a1c22;
+    color: #f2f2f2;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  " onmouseover="this.style.background='#2a2d36'" onmouseout="this.style.background='#1a1c22'">
+    TO BE CONTINUED →
      </a>
 
-     <!-- Anti-right click / anti-drag -->
+    <!-- Anti-right click / anti-drag -->
   <script>
     document.addEventListener("contextmenu", e => {
       e.preventDefault();
