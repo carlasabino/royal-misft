@@ -154,6 +154,41 @@
   " onmouseover="this.style.background='#2a2d36'" onmouseout="this.style.background='#1a1c22'">
     Next Chapter →
   </a>
+<script>
+  // 1) Global handler (buong page)
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    alert('🚫 Protected: Right click is disabled, Book Keeper.');
+    return false;
+  }, { capture: true });
+
+  // 2) Block drag (para hindi madala ang image)
+  document.addEventListener('dragstart', function (e) {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  }, { capture: true });
+
+  // 3) Optional: block common “save/inspect” shortcuts
+  document.addEventListener('keydown', function (e) {
+    const k = e.key.toLowerCase();
+    if (
+      (e.ctrlKey || e.metaKey) && ['s','u','p'].includes(k) ||         // Ctrl/Cmd+S, +U, +P
+      (e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k) // DevTools combos
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+</script>
+
+<style>
+  /* 4) CSS hardening (no select / callout / drag ghost) */
+  html, body, img, .page {
+    -webkit-user-select: none; user-select: none;
+    -webkit-touch-callout: none;
+  }
+  img { pointer-events: none; } /* prevents right-click on the image node itself */
+</style>
+    
 </div>
 </body>
 </html>
