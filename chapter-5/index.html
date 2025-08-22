@@ -36,7 +36,7 @@
     <button class="btn" id="prev">← Prev</button>
     <label class="muted">Page</label>
     <input class="num" id="go" type="number" min="1" value="1">
-    <span class="muted">/ <span id="total">0</span></span>
+    <span class="muted">/ <span id="total">8</span></span>
     <button class="btn" id="next">Next →</button>
     <div class="sep"></div>
     <button class="btn" id="fit">Fit</button>
@@ -44,43 +44,28 @@
     <button class="btn" id="zout">−</button>
     <button class="btn" id="mode">🌙/☀️</button>
   </div>
-
   <div id="pages" class="wrap" aria-live="polite"></div>
-
   <script>
   (function(){
-    // 🔧 ITO ANG TATLONG BAGAY NA BABAGUHIN MO PER CHAPTER:
-    const DIR    = "../images/";  // kung nasa /chapter-5/index.html ka at images nasa /images/
-    const PREFIX = "CH5";         // pangalan na base ng files (CH5.jpg, CH5_01.jpg, …)
-    const PAGES  = 7;             // total pages inc. cover
-
-    // Optional sanity logs (tumutulong sa debug; pwede mong i-off)
-    console.log({DIR, PREFIX, PAGES});
+    const DIR = "images/";
+    const TOTAL = 7;
 
     const pagesEl = document.getElementById("pages");
-    const totalEl = document.getElementById("total");
-    totalEl.textContent = PAGES;
-
-    // Build pages
-    for (let i = 1; i <= PAGES; i++) {
+    for (let i = 1; i <= TOTAL; i++) {
       const p = document.createElement("div");
       p.className = "page";
       p.dataset.page = i;
 
-      // page 1: PREFIX.jpg ; page 2..N: PREFIX_01.jpg ...
-      const filename = (i === 1)
-        ? `${PREFIX}.jpg`
-        : `${PREFIX}_${String(i - 1).padStart(2, "0")}.jpg`;
+      const filename = i === 1 
+        ? "CH5.jpg" 
+        : `CH5_${String(i - 1).padStart(2, "0")}.jpg`;
 
       const img = document.createElement("img");
       img.alt = `Page ${i}`;
       img.loading = "lazy";
       img.decoding = "async";
       img.dataset.src = DIR + filename;
-      img.onerror = () => {
-        console.error("Missing image:", img.dataset.src);
-        p.classList.add("hide");
-      };
+      img.onerror = () => p.classList.add("hide");
 
       const tag = document.createElement("div");
       tag.className = "tag";
@@ -91,7 +76,6 @@
       pagesEl.appendChild(p);
     }
 
-    // Lazy load images when near viewport
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         const img = e.target.querySelector("img");
@@ -101,9 +85,9 @@
         }
       });
     }, { rootMargin: "800px 0px" });
+
     document.querySelectorAll(".page").forEach(p => io.observe(p));
 
-    // UI logic
     let current = 1, zoom = 1;
     const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
     const go = document.getElementById("go");
@@ -114,7 +98,7 @@
     }
 
     function scrollToPage(n) {
-      current = clamp(n, 1, PAGES);
+      current = clamp(n, 1, TOTAL);
       go.value = current;
       const el = document.querySelector(`.page[data-page="${current}"]`);
       if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
@@ -122,9 +106,9 @@
 
     document.getElementById("prev").onclick = () => scrollToPage(current - 1);
     document.getElementById("next").onclick = () => scrollToPage(current + 1);
-    document.getElementById("zin").onclick  = () => setZoom(zoom + 0.15);
+    document.getElementById("zin").onclick = () => setZoom(zoom + 0.15);
     document.getElementById("zout").onclick = () => setZoom(zoom - 0.15);
-    document.getElementById("fit").onclick  = () => {
+    document.getElementById("fit").onclick = () => {
       const first = document.querySelector(".page img");
       if (!first || !first.naturalWidth) return setZoom(1);
       const need = pagesEl.clientWidth / first.naturalWidth;
@@ -132,10 +116,8 @@
     };
     document.getElementById("mode").onclick = () =>
       document.body.classList.toggle("light");
-
     go.onchange = () => scrollToPage(parseInt(go.value || "1", 10));
 
-    // Update current page display based on scroll
     const spy = new IntersectionObserver(es => {
       es.forEach(e => {
         if (e.isIntersecting) {
@@ -147,10 +129,10 @@
     document.querySelectorAll(".page").forEach(p => spy.observe(p));
 
     window.addEventListener("keydown", e => {
-      if (e.key === "ArrowLeft")  scrollToPage(current - 1);
+      if (e.key === "ArrowLeft") scrollToPage(current - 1);
       if (e.key === "ArrowRight") scrollToPage(current + 1);
-      if (e.key === "+")          setZoom(zoom + 0.15);
-      if (e.key === "-")          setZoom(zoom - 0.15);
+      if (e.key === "+") setZoom(zoom + 0.15);
+      if (e.key === "-") setZoom(zoom - 0.15);
       if (e.key.toLowerCase() === "f") document.getElementById("fit").click();
     });
 
@@ -158,35 +140,32 @@
     setZoom(1);
   })();
   </script>
-
-  <!-- Chapter nav (ayusin ang paths as needed) -->
   <div style="text-align:center; margin-top: 3rem;">
-    <a href="../chapter-4/" style="color: #aaa; text-decoration: none; margin-right: 1rem;">← Back to Chapter 4</a>
-    <a href="../chapter-6/" style="
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      background-color: #1a1c22;
-      color: #f2f2f2;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    " onmouseover="this.style.background='#2a2d36'" onmouseout="this.style.background='#1a1c22'">
-      Next Chapter →
-    </a>
-  </div>
+  <a href="../chapter-/" style="color: #aaa; text-decoration: none; margin-right: 1rem;">← Back to Chapter 4</a>
+  <a href="../TO BE CONTINUED/" style="
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #1a1c22;
+    color: #f2f2f2;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  " onmouseover="this.style.background='#2a2d36'" onmouseout="this.style.background='#1a1c22'">
+    TO BE CONTINUED →
+     </a>
 
-  <!-- Anti-right click / anti-drag -->
+     <!-- Anti-right click / anti-drag -->
   <script>
     document.addEventListener("contextmenu", e => {
       e.preventDefault();
       alert("🚫 Protected: Right click is disabled, Book Keeper.");
     }, {passive:false});
-
-    // block image drag
     document.addEventListener("dragstart", e => {
       if (e.target.tagName === "IMG") e.preventDefault();
     }, {passive:false});
-  </script>
+
+    
+</div>
 </body>
 </html>
